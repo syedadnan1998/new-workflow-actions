@@ -1,0 +1,30 @@
+name: First Workflow
+
+# Manual trigger: shows a "Run workflow" button in the Actions tab
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: "Who should we greet?"
+        required: false
+        default: "World"
+
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Say hello
+        run: echo "Hello, ${{ github.event.inputs.name }}!"
+
+      - name: Show environment info
+        run: |
+          echo "Runner OS: $RUNNER_OS"
+          echo "Branch: $GITHUB_REF_NAME"
+          echo "Triggered by: $GITHUB_ACTOR"
+          date
+
+      - name: List repository files
+        run: ls -la
